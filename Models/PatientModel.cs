@@ -1,19 +1,25 @@
 using System;
+using System.ComponentModel.DataAnnotations; // <--- ต้องมีบรรทัดนี้ ไม่งั้น Build Failed
 
 namespace StonePACS.Models
 {
-    // คลาสสำหรับเก็บข้อมูลคนไข้ 1 คน
     public class PatientModel
     {
+        [Key] // <--- ต้องมีบรรทัดนี้
+        public int Id { get; set; } 
+
         public string HN { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
-        // เก็บเพศเป็น string ง่ายๆ ไปก่อน (Male/Female)
         public string Sex { get; set; } = "Male"; 
-        // ใช้วันที่ปัจจุบันเป็นค่าเริ่มต้น
-        public DateTimeOffset DateOfBirth { get; set; } = DateTimeOffset.Now;
+        // เปลี่ยนจาก DateTimeOffset.Now เป็น DateTimeOffset.UtcNow
+        public DateTimeOffset DateOfBirth { get; set; } = DateTimeOffset.UtcNow;
 
-        // Property เสริมเพื่อรวมชื่อ (เอาไว้โชว์)
         public string FullName => $"{FirstName} {LastName}";
+
+        // ข้อมูลการส่งตรวจ
+        public string Modality { get; set; } = "DX"; 
+        public string ExamCode { get; set; } = string.Empty; 
+        public string StudyDescription { get; set; } = string.Empty; 
     }
 }

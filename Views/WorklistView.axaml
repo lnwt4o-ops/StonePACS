@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:StonePACS.ViewModels"
+             x:Class="StonePACS.Views.WorklistView"
+             x:DataType="vm:WorklistViewModel">
+
+    <Grid RowDefinitions="Auto, *">
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto, Auto" Margin="20">
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="📋 Worklist" Theme="{DynamicResource TitleTextBlockStyle}"/>
+                <TextBlock Text="Today's scheduled examinations" Classes="Tertiary"/>
+            </StackPanel>
+            
+            <Button Grid.Column="1" Command="{Binding LoadPatientsCommand}" Classes="Success">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <TextBlock Text="🔄"/>
+                    <TextBlock Text="Refresh List"/>
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Column="2" Command="{Binding TestConnectionCommand}" Classes="Primary" Margin="10,0,0,0">
+                 Test X-Ray Query 📡
+            </Button>
+        </Grid>
+
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Patients}"
+                  AutoGenerateColumns="False" 
+                  IsReadOnly="True"
+                  Margin="20,0,20,20"
+                  BorderThickness="1" BorderBrush="#E0E0E0"
+                  GridLinesVisibility="All">
+            
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
+                <DataGridTextColumn Header="HN" Binding="{Binding HN}" Width="100"/>
+                <DataGridTextColumn Header="Patient Name" Binding="{Binding FullName}" Width="200"/>
+                <DataGridTextColumn Header="Sex" Binding="{Binding Sex}" Width="80"/>
+                <DataGridTextColumn Header="Modality" Binding="{Binding Modality}" Width="100" FontWeight="Bold"/>
+                <DataGridTextColumn Header="Accession No." Binding="{Binding ExamCode}" Width="150"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding StudyDescription}" Width="*"/>
+            </DataGrid.Columns>
+            
+        </DataGrid>
+    </Grid>
+</UserControl>
