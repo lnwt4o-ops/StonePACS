@@ -1,51 +1,61 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:StonePACS.ViewModels"
         x:Class="StonePACS.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
-        Title="Stone PACS" WindowStartupLocation="CenterScreen"
-        Width="1024" Height="768">
+        Title="StonePACS Server Dashboard" Width="500" Height="450"
+        WindowStartupLocation="CenterScreen" Background="#F4F7F9">
 
-    <Grid ColumnDefinitions="240, *">
-        
-        <Border Grid.Column="0" Background="#2C3E50">
-            <StackPanel Spacing="5" Margin="10">
-                <TextBlock Text="STONE PACS" 
-                           Foreground="White" FontWeight="Bold" FontSize="22" 
-                           HorizontalAlignment="Center" Margin="0,30,0,40"/>
-                
-                <Button Command="{Binding GoToWorklistCommand}" 
-                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
-                        Background="Transparent" Foreground="White" Padding="15,12" CornerRadius="8">
-                    <StackPanel Orientation="Horizontal" Spacing="10">
-                        <TextBlock Text="📋"/>
-                        <TextBlock Text="Worklist" FontWeight="SemiBold"/>
-                    </StackPanel>
-                </Button>
+    <StackPanel Margin="30" Spacing="20">
+        <StackPanel Spacing="5">
+            <TextBlock Text="🖥️ StonePACS Dashboard" FontSize="24" FontWeight="Bold" Foreground="#2C3E50"/>
+            <TextBlock Text="Server Management &amp; Control" Foreground="#7F8C8D"/>
+        </StackPanel>
 
-                <Button Command="{Binding GoToRegistrationCommand}" 
-                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
-                        Background="Transparent" Foreground="White" Padding="15,12" CornerRadius="8">
-                     <StackPanel Orientation="Horizontal" Spacing="10">
-                        <TextBlock Text="➕"/>
-                        <TextBlock Text="New Registration" FontWeight="SemiBold"/>
-                    </StackPanel>
-                </Button>
+        <Separator Height="1" Background="#DCDFE3"/>
 
-                <Button Command="{Binding GoToExamCodeSetupCommand}" 
-                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
-                        Background="Transparent" Foreground="White" Padding="15,12" CornerRadius="8">
-                    <StackPanel Orientation="Horizontal" Spacing="10">
-                        <TextBlock Text="⚙️"/>
-                        <TextBlock Text="Exam Code Setup" FontWeight="SemiBold"/>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
+        <Border Background="White" CornerRadius="12" Padding="20" BoxShadow="0 4 10 0 #1A000000">
+            <Grid ColumnDefinitions="*, Auto">
+                <StackPanel>
+                    <TextBlock Text="IIS Web Server" FontWeight="Bold" FontSize="16"/>
+                    <TextBlock Text="Running Web Registration" FontSize="12" Foreground="Gray"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                    <Button Content="Start" Command="{Binding ManageIISCommand}" CommandParameter="start" Classes="Success Small"/>
+                    <Button Content="Restart" Command="{Binding ManageIISCommand}" CommandParameter="restart" Classes="Primary Small"/>
+                </StackPanel>
+            </Grid>
         </Border>
 
-        <Border Grid.Column="1" Background="#F4F5F7">
-            <ContentControl Content="{Binding CurrentView}" Margin="0"/>
+        <Border Background="White" CornerRadius="12" Padding="20" BoxShadow="0 4 10 0 #1A000000">
+            <Grid ColumnDefinitions="*, Auto">
+                <StackPanel>
+                    <TextBlock Text="Orthanc PACS Service" FontWeight="Bold" FontSize="16"/>
+                    <TextBlock Text="DICOM &amp; Worklist Engine" FontSize="12" Foreground="Gray"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                    <Button Content="Start" Command="{Binding ManageOrthancCommand}" CommandParameter="start" Classes="Success Small"/>
+                    <Button Content="Restart" Command="{Binding ManageOrthancCommand}" CommandParameter="restart" Classes="Primary Small"/>
+                </StackPanel>
+            </Grid>
         </Border>
-        
-    </Grid>
+
+        <Grid ColumnDefinitions="*, *">
+            <Button Grid.Column="0" Height="80" Margin="0,0,5,0" HorizontalAlignment="Stretch"
+                    Command="{Binding OpenWebRegistrationCommand}" Background="#34495E">
+                <StackPanel Spacing="5">
+                    <TextBlock Text="🌐" HorizontalAlignment="Center" FontSize="20"/>
+                    <TextBlock Text="Web Admin" HorizontalAlignment="Center" Foreground="White"/>
+                </StackPanel>
+            </Button>
+            
+            <Button Grid.Column="1" Height="80" Margin="5,0,0,0" HorizontalAlignment="Stretch"
+                    Command="{Binding OpenSettingsCommand}" Background="#95A5A6">
+                <StackPanel Spacing="5">
+                    <TextBlock Text="⚙️" HorizontalAlignment="Center" FontSize="20"/>
+                    <TextBlock Text="Settings" HorizontalAlignment="Center" Foreground="White"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <TextBlock Text="{Binding SystemMessage}" FontSize="12" HorizontalAlignment="Center" Foreground="#E74C3C"/>
+    </StackPanel>
 </Window>

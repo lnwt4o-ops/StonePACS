@@ -1,51 +1,50 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
-using System.Linq;
 using Avalonia.Markup.Xaml;
 using StonePACS.ViewModels;
 using StonePACS.Views;
+using System.Linq;
 
-namespace StonePACS;
-
-public partial class App : Application
+namespace StonePACS
 {
-    public override void Initialize()
+    public partial class App : Application
     {
-        // ✅ Set Culture to English (fixes DatePicker showing Chinese)
-        System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-        System.Globalization.CultureInfo.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
-        
-        AvaloniaXamlLoader.Load(this);
-    }
-
-    public override void OnFrameworkInitializationCompleted()
-    {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        public override void Initialize()
         {
-            // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
-            // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
-            DisableAvaloniaDataAnnotationValidation();
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = new MainWindowViewModel(),
-            };
+            // ✅ ตั้งค่าภาษาเป็น English เพื่อแก้ปัญหา DatePicker แสดงผลเพี้ยน
+            System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            System.Globalization.CultureInfo.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+
+            AvaloniaXamlLoader.Load(this);
         }
 
-        base.OnFrameworkInitializationCompleted();
-    }
-
-    private void DisableAvaloniaDataAnnotationValidation()
-    {
-        // Get an array of plugins to remove
-        var dataValidationPluginsToRemove =
-            BindingPlugins.DataValidators.OfType<DataAnnotationsValidationPlugin>().ToArray();
-
-        // remove each entry found
-        foreach (var plugin in dataValidationPluginsToRemove)
+        public override void OnFrameworkInitializationCompleted()
         {
-            BindingPlugins.DataValidators.Remove(plugin);
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                // ปิดการตรวจสอบ DataAnnotation ซ้ำซ้อน
+                DisableAvaloniaDataAnnotationValidation();
+
+                // ✅ เชื่อมต่อ MainWindow เข้ากับ MainViewModel (Server Dashboard)
+                desktop.MainWindow = new MainWindow
+                {
+                    DataContext = new MainViewModel(),
+                };
+            }
+
+            base.OnFrameworkInitializationCompleted();
+        }
+
+        private void DisableAvaloniaDataAnnotationValidation()
+        {
+            var dataValidationPluginsToRemove =
+                BindingPlugins.DataValidators.OfType<DataAnnotationsValidationPlugin>().ToArray();
+
+            foreach (var plugin in dataValidationPluginsToRemove)
+            {
+                BindingPlugins.DataValidators.Remove(plugin);
+            }
         }
     }
 }
