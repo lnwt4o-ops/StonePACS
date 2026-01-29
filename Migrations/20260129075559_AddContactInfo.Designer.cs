@@ -12,8 +12,8 @@ using StonePACS.Data;
 namespace StonePACS.Migrations
 {
     [DbContext(typeof(StoneDbContext))]
-    [Migration("20260129035311_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260129075559_AddContactInfo")]
+    partial class AddContactInfo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,11 @@ namespace StonePACS.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTimeOffset>("DateOfBirth")
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ExamCode")
@@ -56,7 +60,22 @@ namespace StonePACS.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Sex")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("StatusColor")
                         .IsRequired()
                         .HasColumnType("text");
 

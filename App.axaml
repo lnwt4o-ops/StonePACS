@@ -9,7 +9,9 @@
 
 <Application.Styles>
     <StyleInclude Source="avares://Semi.Avalonia/Themes/Index.axaml" />
-    
     <StyleInclude Source="avares://Semi.Avalonia.DataGrid/Index.axaml" />
+    
+    <!-- Custom Styles for Modern UI -->
+    <StyleInclude Source="/Styles/CustomStyles.axaml" />
 </Application.Styles>
 </Application>

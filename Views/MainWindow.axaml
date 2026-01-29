@@ -31,6 +31,15 @@
                         <TextBlock Text="New Registration" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Button>
+
+                <Button Command="{Binding GoToExamCodeSetupCommand}" 
+                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                        Background="Transparent" Foreground="White" Padding="15,12" CornerRadius="8">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="⚙️"/>
+                        <TextBlock Text="Exam Code Setup" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Button>
             </StackPanel>
         </Border>
 

@@ -1,0 +1,169 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:StonePACS.ViewModels"
+             x:Class="StonePACS.Views.ExamCodeSetupView"
+             x:DataType="vm:ExamCodeSetupViewModel"
+             x:Name="Root">
+
+    <Border Background="{StaticResource BackgroundGradient}">
+        <Grid ColumnDefinitions="2*, 20, 3*" Margin="30">
+            
+            <!-- Left: Form -->
+            <Border Grid.Column="0" Classes="GlassCard">
+                <StackPanel Spacing="20">
+                    
+                    <!-- Header -->
+                    <StackPanel>
+                        <TextBlock Text="📋 Exam Code Setup" 
+                                   FontSize="24" FontWeight="Bold" 
+                                   Foreground="#1F2937"/>
+                        <TextBlock Text="Manage examination codes" 
+                                   FontSize="13" Foreground="#6B7280" Margin="0,5,0,0"/>
+                    </StackPanel>
+
+                    <Separator Background="#E5E7EB" Height="1"/>
+
+                    <!-- Code -->
+                    <StackPanel>
+                        <TextBlock Text="Code *" FontWeight="SemiBold" FontSize="13" Foreground="#374151" Margin="0,0,0,6"/>
+                        <TextBox Text="{Binding SelectedExam.Code}" 
+                                 Watermark="e.g. CXR, ABD" 
+                                 Classes="Large"/>
+                    </StackPanel>
+
+                    <!-- Name -->
+                    <StackPanel>
+                        <TextBlock Text="Name *" FontWeight="SemiBold" FontSize="13" Foreground="#374151" Margin="0,0,0,6"/>
+                        <TextBox Text="{Binding SelectedExam.Name}" 
+                                 Watermark="e.g. Chest X-Ray" 
+                                 Classes="Large"/>
+                    </StackPanel>
+
+                    <!-- Modality -->
+                    <StackPanel>
+                        <TextBlock Text="Modality" FontWeight="SemiBold" FontSize="13" Foreground="#374151" Margin="0,0,0,6"/>
+                        <ComboBox ItemsSource="{Binding ModalityOptions}" 
+                                  SelectedItem="{Binding SelectedExam.Modality}" 
+                                  HorizontalAlignment="Stretch" 
+                                  Classes="Large"/>
+                    </StackPanel>
+
+                    <!-- Description -->
+                    <StackPanel>
+                        <TextBlock Text="Description" FontWeight="SemiBold" FontSize="13" Foreground="#374151" Margin="0,0,0,6"/>
+                        <TextBox Text="{Binding SelectedExam.Description}" 
+                                 Watermark="PA and Lateral view" 
+                                 AcceptsReturn="True" 
+                                 TextWrapping="Wrap" 
+                                 MinHeight="80" 
+                                 Classes="Large"/>
+                    </StackPanel>
+
+                    <!-- Buttons -->
+                    <Grid ColumnDefinitions="*, 10, *">
+                        <Button Grid.Column="0" 
+                                Command="{Binding SaveExamCommand}" 
+                                Classes="Success Large" 
+                                Height="45">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBlock Text="💾" FontSize="16"/>
+                                <TextBlock Text="SAVE" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Grid.Column="2" 
+                                Command="{Binding NewExamCommand}" 
+                                Classes="Secondary Large" 
+                                Height="45">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBlock Text="➕" FontSize="16"/>
+                                <TextBlock Text="NEW" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <!-- Status Message -->
+                    <Border Background="White" 
+                            CornerRadius="8" 
+                            Padding="12" 
+                            BorderThickness="1" 
+                            BorderBrush="#E5E7EB"
+                            IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                        <TextBlock Text="{Binding StatusMessage}" 
+                                   FontSize="13" 
+                                   Foreground="#EF4444" 
+                                   TextWrapping="Wrap"/>
+                    </Border>
+
+                </StackPanel>
+            </Border>
+
+            <!-- Right: DataGrid -->
+            <Border Grid.Column="2" Classes="GlassCard">
+                <StackPanel Spacing="15">
+                    
+                    <!-- Header -->
+                    <Grid ColumnDefinitions="*, Auto">
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Exam Code List" 
+                                       FontSize="20" FontWeight="Bold" 
+                                       Foreground="#1F2937"/>
+                            <TextBlock Text="{Binding ExamCodes.Count, StringFormat='{}{0} codes'}" 
+                                       FontSize="12" Foreground="#6B7280"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" 
+                                Command="{Binding LoadExamCodesCommand}" 
+                                Classes="Primary" 
+                                Width="100" Height="35"
+                                ToolTip.Tip="Refresh">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="🔄" FontSize="14"/>
+                                <TextBlock Text="Refresh" FontSize="13" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <Separator Background="#E5E7EB" Height="1"/>
+
+                    <!-- DataGrid -->
+                    <DataGrid ItemsSource="{Binding ExamCodes}" 
+                              AutoGenerateColumns="False" 
+                              IsReadOnly="True" 
+                              GridLinesVisibility="None"
+                              Background="Transparent"
+                              Height="550">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Code" Binding="{Binding Code}" Width="80"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="150"/>
+                            <DataGridTextColumn Header="Modality" Binding="{Binding Modality}" Width="80"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
+                            <DataGridTemplateColumn Header="Actions" Width="120">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Spacing="5">
+                                            <Button Command="{Binding #Root.DataContext.EditExamCommand}" 
+                                                    CommandParameter="{Binding}"
+                                                    Classes="Primary" 
+                                                    Width="50" Height="30"
+                                                    ToolTip.Tip="Edit">
+                                                <TextBlock Text="✏️" FontSize="14"/>
+                                            </Button>
+                                            <Button Command="{Binding #Root.DataContext.DeleteExamCommand}" 
+                                                    CommandParameter="{Binding}"
+                                                    Classes="Danger" 
+                                                    Width="50" Height="30"
+                                                    ToolTip.Tip="Delete">
+                                                <TextBlock Text="🗑️" FontSize="14"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </StackPanel>
+            </Border>
+
+        </Grid>
+    </Border>
+</UserControl>

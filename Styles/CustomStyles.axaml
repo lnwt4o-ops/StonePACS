@@ -1,0 +1,225 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Styles.Resources>
+        <!-- ==================== GRADIENT BRUSHES ==================== -->
+        <LinearGradientBrush x:Key="PrimaryGradient" StartPoint="0%,0%" EndPoint="100%,100%">
+            <GradientStop Color="#667EEA" Offset="0"/>
+            <GradientStop Color="#764BA2" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="SuccessGradient" StartPoint="0%,0%" EndPoint="100%,100%">
+            <GradientStop Color="#10B981" Offset="0"/>
+            <GradientStop Color="#06B6D4" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0%,0%" EndPoint="0%,100%">
+            <GradientStop Color="#F8F9FF" Offset="0"/>
+            <GradientStop Color="#E8EEFF" Offset="1"/>
+        </LinearGradientBrush>
+    </Styles.Resources>
+
+    <!-- ==================== BUTTON STYLES ==================== -->
+    
+    <!-- Primary Gradient Button -->
+    <Style Selector="Button.Primary">
+        <Setter Property="Background" Value="{StaticResource PrimaryGradient}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="16,10"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2"/>
+                <DoubleTransition Property="Opacity" Duration="0:0:0.2"/>
+            </Transitions>
+        </Setter>
+    </Style>
+    
+    <Style Selector="Button.Primary:pointerover">
+        <Setter Property="RenderTransform" Value="scale(1.02)"/>
+    </Style>
+
+    <Style Selector="Button.Primary:pressed">
+        <Setter Property="RenderTransform" Value="scale(0.98)"/>
+    </Style>
+
+    <!-- Success Gradient Button -->
+    <Style Selector="Button.Success">
+        <Setter Property="Background" Value="{StaticResource SuccessGradient}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="16,10"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2"/>
+            </Transitions>
+        </Setter>
+    </Style>
+    
+    <Style Selector="Button.Success:pointerover">
+        <Setter Property="RenderTransform" Value="scale(1.02)"/>
+    </Style>
+
+    <Style Selector="Button.Success:pressed">
+        <Setter Property="RenderTransform" Value="scale(0.98)"/>
+    </Style>
+
+    <!-- Danger Button -->
+    <Style Selector="Button.Danger">
+        <Setter Property="Background" Value="#EF4444"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="CornerRadius" Value="6"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2"/>
+            </Transitions>
+        </Setter>
+    </Style>
+    
+    <Style Selector="Button.Danger:pointerover">
+        <Setter Property="Background" Value="#DC2626"/>
+        <Setter Property="RenderTransform" Value="scale(1.02)"/>
+    </Style>
+
+    <Style Selector="Button.Danger:pressed">
+        <Setter Property="RenderTransform" Value="scale(0.98)"/>
+    </Style>
+
+    <!-- Secondary Button -->
+    <Style Selector="Button.Secondary">
+        <Setter Property="Background" Value="#F3F4F6"/>
+        <Setter Property="Foreground" Value="#374151"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#D1D5DB"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="16,10"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2"/>
+            </Transitions>
+        </Setter>
+    </Style>
+    
+    <Style Selector="Button.Secondary:pointerover">
+        <Setter Property="Background" Value="#E5E7EB"/>
+        <Setter Property="BorderBrush" Value="#9CA3AF"/>
+    </Style>
+
+    <!-- Small Button Variant -->
+    <Style Selector="Button.Small">
+        <Setter Property="Padding" Value="10,6"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="MinHeight" Value="32"/>
+    </Style>
+
+    <!-- Large Button Variant -->
+    <Style Selector="Button.Large">
+        <Setter Property="Padding" Value="20,12"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="MinHeight" Value="48"/>
+    </Style>
+
+    <!-- ==================== INPUT STYLES ==================== -->
+    
+    <Style Selector="TextBox.Large">
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="12,10"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderBrush" Value="#E5E7EB"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.2"/>
+                <ThicknessTransition Property="BorderThickness" Duration="0:0:0.2"/>
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="TextBox.Large:focus">
+        <Setter Property="BorderBrush" Value="#667EEA"/>
+        <Setter Property="BorderThickness" Value="2"/>
+    </Style>
+
+    <Style Selector="TextBox.Large:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="BorderBrush" Value="#9CA3AF"/>
+    </Style>
+
+    <!-- ComboBox Large Style -->
+    <Style Selector="ComboBox.Large">
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="12,10"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderBrush" Value="#E5E7EB"/>
+    </Style>
+
+    <Style Selector="ComboBox.Large:focus">
+        <Setter Property="BorderBrush" Value="#667EEA"/>
+    </Style>
+
+    <!-- ==================== CARD STYLES ==================== -->
+    
+    <Style Selector="Border.GlassCard">
+        <Setter Property="Background" Value="#F9FAFBEE"/>
+        <Setter Property="CornerRadius" Value="16"/>
+        <Setter Property="Padding" Value="24"/>
+        <Setter Property="BoxShadow" Value="0 10 30 0 #10000000"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#E5E7EB"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.3"/>
+                <BoxShadowsTransition Property="BoxShadow" Duration="0:0:0.3"/>
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="Border.GlassCard:pointerover">
+        <Setter Property="BoxShadow" Value="0 15 40 0 #18000000"/>
+        <Setter Property="RenderTransform" Value="translateY(-2px)"/>
+    </Style>
+
+    <!-- ==================== DATAGRID STYLES ==================== -->
+    
+    <Style Selector="DataGrid">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="RowBackground" Value="White"/>
+        <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+    </Style>
+
+    <Style Selector="DataGridRow:pointerover /template/ Rectangle#BackgroundRectangle">
+        <Setter Property="Fill" Value="#F3F4F6"/>
+    </Style>
+
+    <Style Selector="DataGridRow:selected /template/ Rectangle#BackgroundRectangle">
+        <Setter Property="Fill" Value="#EEF2FF"/>
+    </Style>
+
+    <Style Selector="DataGridColumnHeader">
+        <Setter Property="Background" Value="#F9FAFB"/>
+        <Setter Property="Foreground" Value="#374151"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Padding" Value="12,10"/>
+        <Setter Property="BorderThickness" Value="0,0,0,2"/>
+        <Setter Property="BorderBrush" Value="#E5E7EB"/>
+    </Style>
+
+</Styles>

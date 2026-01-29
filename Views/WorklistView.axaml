@@ -1,45 +1,200 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:StonePACS.ViewModels"
+             xmlns:local="using:StonePACS.Views"
              x:Class="StonePACS.Views.WorklistView"
-             x:DataType="vm:WorklistViewModel">
-
+             x:DataType="vm:WorklistViewModel"
+             x:Name="Root">
+             
     <Grid RowDefinitions="Auto, *">
-        <Grid Grid.Row="0" ColumnDefinitions="*, Auto, Auto" Margin="20">
-            <StackPanel Grid.Column="0">
-                <TextBlock Text="📋 Worklist" Theme="{DynamicResource TitleTextBlockStyle}"/>
-                <TextBlock Text="Today's scheduled examinations" Classes="Tertiary"/>
-            </StackPanel>
-            
-            <Button Grid.Column="1" Command="{Binding LoadPatientsCommand}" Classes="Success">
-                <StackPanel Orientation="Horizontal" Spacing="5">
-                    <TextBlock Text="🔄"/>
-                    <TextBlock Text="Refresh List"/>
+        
+        <!-- Header Section with Gradient -->
+        <Border Grid.Row="0" Background="{StaticResource PrimaryGradient}" 
+                Padding="25,20" BoxShadow="0 4 15 0 #20000000">
+            <Grid ColumnDefinitions="*, Auto, Auto, Auto">
+                
+                <!-- Title Section -->
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Border Background="White" CornerRadius="8" 
+                                Padding="8" Width="36" Height="36">
+                            <TextBlock Text="📋" FontSize="20" 
+                                       HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Worklist Manager" 
+                                       FontSize="22" FontWeight="Bold" 
+                                       Foreground="White"/>
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <TextBlock Text="Today's scheduled examinations" 
+                                           FontSize="13" Foreground="#E0E7FF"/>
+                                <TextBlock Text="•" Foreground="#E0E7FF"/>
+                                <TextBlock Text="{Binding Patients.Count}" 
+                                           FontSize="13" Foreground="#E0E7FF" 
+                                           FontWeight="SemiBold"/>
+                                <TextBlock Text="orders" FontSize="13" Foreground="#E0E7FF"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
-            </Button>
+                
+                <!-- Action Buttons -->
+                <Button Grid.Column="1" 
+                        Command="{Binding LoadPatientsCommand}" 
+                        Classes="Secondary" 
+                        Margin="0,0,10,0"
+                        Height="40"
+                        ToolTip.Tip="Refresh patient list">
+                    <StackPanel Orientation="Horizontal" Spacing="7">
+                        <TextBlock Text="🔄" FontSize="16"/>
+                        <TextBlock Text="Refresh" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Button>
 
-            <Button Grid.Column="2" Command="{Binding TestConnectionCommand}" Classes="Primary" Margin="10,0,0,0">
-                 Test X-Ray Query 📡
-            </Button>
-        </Grid>
+                <Button Grid.Column="2" 
+                        Command="{Binding OpenSettingsCommand}" 
+                        Classes="Secondary" 
+                        Margin="0,0,10,0"
+                        Height="40"
+                        ToolTip.Tip="Configure PACS settings">
+                    <StackPanel Orientation="Horizontal" Spacing="7">
+                        <TextBlock Text="⚙️" FontSize="16"/>
+                        <TextBlock Text="Config" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Button>
 
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Patients}"
-                  AutoGenerateColumns="False" 
-                  IsReadOnly="True"
-                  Margin="20,0,20,20"
-                  BorderThickness="1" BorderBrush="#E0E0E0"
-                  GridLinesVisibility="All">
-            
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
-                <DataGridTextColumn Header="HN" Binding="{Binding HN}" Width="100"/>
-                <DataGridTextColumn Header="Patient Name" Binding="{Binding FullName}" Width="200"/>
-                <DataGridTextColumn Header="Sex" Binding="{Binding Sex}" Width="80"/>
-                <DataGridTextColumn Header="Modality" Binding="{Binding Modality}" Width="100" FontWeight="Bold"/>
-                <DataGridTextColumn Header="Accession No." Binding="{Binding ExamCode}" Width="150"/>
-                <DataGridTextColumn Header="Description" Binding="{Binding StudyDescription}" Width="*"/>
-            </DataGrid.Columns>
-            
-        </DataGrid>
+                <Button Grid.Column="3" 
+                        Command="{Binding TestConnectionCommand}" 
+                        Classes="Secondary"
+                        Height="40"
+                        ToolTip.Tip="Test DICOM connection">
+                    <StackPanel Orientation="Horizontal" Spacing="7">
+                        <TextBlock Text="📡" FontSize="16"/>
+                        <TextBlock Text="Test Echo" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- DataGrid Section -->
+        <Border Grid.Row="1" Background="{StaticResource BackgroundGradient}" 
+                Padding="20">
+            <Border Background="White" 
+                    CornerRadius="12" 
+                    BoxShadow="0 4 20 0 #15000000"
+                    ClipToBounds="True">
+                <DataGrid ItemsSource="{Binding Patients}"
+                          AutoGenerateColumns="False" 
+                          IsReadOnly="True"
+                          GridLinesVisibility="None"
+                          HeadersVisibility="Column"
+                          CanUserReorderColumns="True"
+                          CanUserResizeColumns="True">
+                    
+                    <DataGrid.Columns>
+                        
+                        <!-- ID Column -->
+                        <DataGridTextColumn Header="ID" 
+                                            Binding="{Binding Id}" 
+                                            Width="60"/>
+                        
+                        <!-- HN Column -->
+                        <DataGridTextColumn Header="HN" 
+                                            Binding="{Binding HN}" 
+                                            Width="110"/>
+                        
+                        <!-- Patient Name Column -->
+                        <DataGridTextColumn Header="Patient Name" 
+                                            Binding="{Binding FullName}" 
+                                            Width="200"/>
+                        
+                        <!-- Modality Column -->
+                        <DataGridTemplateColumn Header="Modality" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Background="#EEF2FF" 
+                                            CornerRadius="6" 
+                                            Padding="8,4" 
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="5">
+                                        <TextBlock Text="{Binding Modality}" 
+                                                   Foreground="#4338CA" 
+                                                   FontSize="13" 
+                                                   FontWeight="Bold"/>
+                                    </Border>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        
+                        <!-- Accession No. Column -->
+                        <DataGridTextColumn Header="Accession No." 
+                                            Binding="{Binding ExamCode}" 
+                                            Width="150"/>
+                        
+                        <!-- Status Column -->
+                        <DataGridTemplateColumn Header="Status" Width="120">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border CornerRadius="8" 
+                                            Padding="10,5" 
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="5">
+                                        <Border.Background>
+                                            <MultiBinding Converter="{x:Static local:StatusColorConverter.Instance}">
+                                                <Binding Path="Status"/>
+                                            </MultiBinding>
+                                        </Border.Background>
+                                        <TextBlock Text="{Binding Status}" 
+                                                   Foreground="White" 
+                                                   FontSize="12" 
+                                                   FontWeight="Bold"/>
+                                    </Border>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <!-- Action Column -->
+                        <DataGridTemplateColumn Header="Actions" Width="*" MinWidth="280">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" 
+                                                Spacing="8" 
+                                                HorizontalAlignment="Center"
+                                                Margin="5">
+                                        
+                                        <!-- View Standard Button -->
+                                        <Button Content="👁️ View" 
+                                                Command="{Binding DataContext.OpenStandardViewerCommand, ElementName=Root}"
+                                                CommandParameter="{Binding}" 
+                                                Classes="Primary Small"
+                                                ToolTip.Tip="Open Standard Viewer"/>
+
+                                        <!-- View Stone Button -->
+                                        <Button Content="🚀 Stone" 
+                                                Command="{Binding DataContext.OpenStoneViewerCommand, ElementName=Root}"
+                                                CommandParameter="{Binding}" 
+                                                Classes="Secondary Small"
+                                                ToolTip.Tip="Open Stone Web Viewer"/>
+
+                                        <!-- Delete Button -->
+                                        <Button Content="❌ Delete" 
+                                                Command="{Binding DataContext.CancelOrderCommand, ElementName=Root}"
+                                                CommandParameter="{Binding}" 
+                                                Classes="Danger Small"
+                                                ToolTip.Tip="Delete Order"/>
+                                                
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+            </Border>
+        </Border>
     </Grid>
 </UserControl>

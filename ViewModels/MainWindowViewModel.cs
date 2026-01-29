@@ -21,5 +21,8 @@ namespace StonePACS.ViewModels
 
         [RelayCommand]
         public void GoToRegistration() => CurrentView = new RegistrationViewModel();
+
+        [RelayCommand]
+        public void GoToExamCodeSetup() => CurrentView = new ExamCodeSetupViewModel();
     }
 }

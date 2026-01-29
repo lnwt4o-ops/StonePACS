@@ -13,6 +13,10 @@ public partial class App : Application
 {
     public override void Initialize()
     {
+        // ✅ Set Culture to English (fixes DatePicker showing Chinese)
+        System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+        System.Globalization.CultureInfo.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+        
         AvaloniaXamlLoader.Load(this);
     }
 

@@ -1,0 +1,57 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="StonePACS.Views.SettingsWindow"
+        Title="System Configuration"
+        Width="450" Height="400"
+        WindowStartupLocation="CenterOwner">
+
+    <StackPanel Margin="20" Spacing="15">
+        <TextBlock Text="⚙️ System Configuration" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+
+        <Border Classes="Card" Padding="15">
+            <StackPanel Spacing="10">
+                <TextBlock Text="Orthanc Connection" FontWeight="Bold"/>
+                <Grid ColumnDefinitions="100, *" RowDefinitions="Auto, Auto, Auto">
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="IP Address:" VerticalAlignment="Center"/>
+                    <TextBox Name="TxtIp" Grid.Row="0" Grid.Column="1"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Web Port:" VerticalAlignment="Center" Margin="0,10,0,0"/>
+                    <TextBox Name="TxtWebPort" Grid.Row="1" Grid.Column="1" Margin="0,10,0,0"/>
+                    
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="DICOM Port:" VerticalAlignment="Center" Margin="0,10,0,0"/>
+                    <TextBox Name="TxtDicomPort" Grid.Row="2" Grid.Column="1" Margin="0,10,0,0"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <Border Classes="Card" Padding="15">
+            <StackPanel Spacing="10">
+                <TextBlock Text="DICOM AE Titles" FontWeight="Bold"/>
+                <Grid ColumnDefinitions="100, *" RowDefinitions="Auto, Auto">
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="My AE Title:" VerticalAlignment="Center"/>
+                    <TextBox Name="TxtMyAE" Grid.Row="0" Grid.Column="1"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Orthanc AE:" VerticalAlignment="Center" Margin="0,10,0,0"/>
+                    <TextBox Name="TxtServerAE" Grid.Row="1" Grid.Column="1" Margin="0,10,0,0"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Spacing="5">
+             <TextBlock Text="Worklist Folder Path:" FontWeight="Bold"/>
+             <TextBox Name="TxtWorklistPath"/>
+             <TextBlock Text="* Path to Orthanc's Worklist folder" FontSize="11" Foreground="Gray"/>
+        </StackPanel>
+
+        <StackPanel Spacing="5">
+             <TextBlock Text="Database Path:" FontWeight="Bold"/>
+             <TextBox Name="TxtDbPath"/>
+             <TextBlock Text="* Path to SQLite DB file (e.g. StonePACS.db)" FontSize="11" Foreground="Gray"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,10,0,0">
+            <Button Content="Cancel" Click="Cancel_Click"/>
+            <Button Content="💾 Save Settings" Classes="Primary" Click="Save_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

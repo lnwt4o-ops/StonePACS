@@ -4,115 +4,255 @@
              x:Class="StonePACS.Views.RegistrationView"
              x:DataType="vm:RegistrationViewModel">
 
-    <ScrollViewer>
-        <StackPanel Margin="30">
-            
-            <StackPanel Margin="0,0,0,20">
-                <TextBlock Text="New Examination Order" Theme="{DynamicResource TitleTextBlockStyle}" FontSize="24"/>
-                <TextBlock Text="Register patient and create study order" Classes="Tertiary"/>
-            </StackPanel>
-
-            <Grid ColumnDefinitions="*, 20, *" RowDefinitions="Auto, Auto">
+    <Border Background="{StaticResource BackgroundGradient}">
+        <ScrollViewer>
+            <Grid MaxWidth="1000" HorizontalAlignment="Center" Margin="30">
                 
-                <Border Grid.Column="0" Grid.Row="0"
-                        Padding="24" CornerRadius="12" Background="White"
-                        BoxShadow="0 4 12 0 #1A000000">
-                    <StackPanel Spacing="16">
-                        <StackPanel Orientation="Horizontal" Spacing="10">
-                            <TextBlock Text="👤" FontSize="20"/>
-                            <TextBlock Text="Patient Information" FontWeight="Bold" FontSize="16" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <Separator Opacity="0.3"/>
-
-                        <StackPanel>
-                            <TextBlock Text="HN (Hospital Number) *" FontWeight="SemiBold" Margin="0,0,0,4"/>
-                            <Grid ColumnDefinitions="*, 10, Auto">
-                                <TextBox Grid.Column="0" Text="{Binding NewPatient.HN}" Watermark="Type HN and press Enter or Search" Classes="Large"/>
-                                <Button Grid.Column="2" Command="{Binding SearchPatientCommand}" 
-                                        Classes="Primary" Height="40" Width="40" Padding="0">
-                                    <TextBlock Text="🔍" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                </Button>
-                            </Grid>
-                        </StackPanel>
-
-                        <Grid ColumnDefinitions="*, 10, *">
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="First Name *" FontWeight="SemiBold" Margin="0,0,0,4"/>
-                                <TextBox Text="{Binding NewPatient.FirstName}" Watermark="First Name" Classes="Large"/>
-                            </StackPanel>
-                            <StackPanel Grid.Column="2">
-                                <TextBlock Text="Last Name" FontWeight="SemiBold" Margin="0,0,0,4"/>
-                                <TextBox Text="{Binding NewPatient.LastName}" Watermark="Last Name" Classes="Large"/>
-                            </StackPanel>
-                        </Grid>
-
-                        <Grid ColumnDefinitions="*, 10, *">
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="Sex" FontWeight="SemiBold" Margin="0,0,0,4"/>
-                                <ComboBox ItemsSource="{Binding SexOptions}" SelectedItem="{Binding NewPatient.Sex}" 
-                                          HorizontalAlignment="Stretch" Classes="Large"/>
-                            </StackPanel>
-                            <StackPanel Grid.Column="2">
-                                <TextBlock Text="Date of Birth" FontWeight="SemiBold" Margin="0,0,0,4"/>
-                                <DatePicker SelectedDate="{Binding NewPatient.DateOfBirth}" 
-                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                            Height="40"/>
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-                <Border Grid.Column="2" Grid.Row="0"
-                        Padding="24" CornerRadius="12" Background="White"
-                        BoxShadow="0 4 12 0 #1A000000">
-                    <StackPanel Spacing="16">
-                        <StackPanel Orientation="Horizontal" Spacing="10">
-                            <TextBlock Text="🏥" FontSize="20"/>
-                            <TextBlock Text="Study Information" FontWeight="Bold" FontSize="16" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <Separator Opacity="0.3"/>
-
-                        <StackPanel>
-                            <TextBlock Text="Modality (Machine Type) *" FontWeight="SemiBold" Margin="0,0,0,4"/>
-                            <ComboBox ItemsSource="{Binding ModalityOptions}" 
-                                      SelectedItem="{Binding NewPatient.Modality}"
-                                      HorizontalAlignment="Stretch" Classes="Large"/>
-                        </StackPanel>
-
-                        <StackPanel>
-                            <TextBlock Text="Accession Number (Auto)" FontWeight="SemiBold" Margin="0,0,0,4"/>
-                            <TextBox Text="{Binding NewPatient.ExamCode}" 
-                                     Classes="Large" IsReadOnly="False" 
-                                     Foreground="#555" Background="#F5F5F5"/>
-                        </StackPanel>
-
-                        <StackPanel>
-                            <TextBlock Text="Study Description" FontWeight="SemiBold" Margin="0,0,0,4"/>
-                            <TextBox Text="{Binding NewPatient.StudyDescription}" 
-                                     Watermark="e.g. Chest PA Upright"
-                                     AcceptsReturn="True" TextWrapping="Wrap" Height="75" Classes="Large"/>
-                        </StackPanel>
-                    </StackPanel>
-                </Border>
-
-                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,30,0,0">
+                <StackPanel Spacing="25">
                     
-                    <Button Command="{Binding SavePatientCommand}" 
-                            IsEnabled="{Binding !IsBusy}"
-                            Classes="Success Large" Height="55" HorizontalAlignment="Stretch">
-                        <StackPanel Orientation="Horizontal" Spacing="10">
-                            <TextBlock Text="💾" FontSize="20"/>
-                            <TextBlock Text="CONFIRM ORDER" FontWeight="Bold" FontSize="16"/>
+                    <!-- Header Section -->
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="👤 Patient Registration" 
+                                   FontSize="32" FontWeight="Bold" 
+                                   Foreground="#1F2937"/>
+                        <TextBlock Text="Register new or existing patient demographics" 
+                                   FontSize="14" Foreground="#6B7280" Margin="0,8,0,0"/>
+                    </StackPanel>
+
+                    <!-- Patient Information Card-->
+                    <Border Classes="GlassCard">
+                        <StackPanel Spacing="25">
+                            
+                            <!-- Card Header -->
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <Border Background="{StaticResource PrimaryGradient}" 
+                                        CornerRadius="10" Padding="10" Width="40" Height="40">
+                                    <TextBlock Text="👤" FontSize="20" 
+                                               HorizontalAlignment="Center" 
+                                               VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="Patient Information" 
+                                               FontWeight="Bold" FontSize="18" 
+                                               Foreground="#1F2937"/>
+                                    <TextBlock Text="Enter patient details" 
+                                               FontSize="12" Foreground="#9CA3AF"/>
+                                </StackPanel>
+                            </StackPanel>
+                            
+                            <Separator Background="#E5E7EB" Height="1"/>
+
+                            <!-- NEW: Horizontal Grid Layout (4 Columns) -->
+                            <Grid ColumnDefinitions="*, 20, *, 20, *, 20, *" RowDefinitions="Auto, Auto, Auto, Auto">
+                                
+                                <!-- Row 0: HN Search (Span 2) & Phone (Span 2) -->
+                                <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                                    <TextBlock Text="HN (Hospital Number)" 
+                                               FontWeight="SemiBold" FontSize="13"
+                                               Foreground="#374151" Margin="0,0,0,6">
+                                        <TextBlock.Inlines>
+                                            <Run Text=" *" Foreground="#EF4444"/>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <Grid ColumnDefinitions="*, 10, Auto">
+                                        <TextBox Grid.Column="0" 
+                                                 Text="{Binding NewPatient.HN}" 
+                                                 Watermark="Type HN and press Enter" 
+                                                 Classes="Large">
+                                            <TextBox.KeyBindings>
+                                                <KeyBinding Gesture="Enter" Command="{Binding SearchPatientCommand}"/>
+                                            </TextBox.KeyBindings>
+                                        </TextBox>
+                                        <Button Grid.Column="2" 
+                                                Command="{Binding SearchPatientCommand}" 
+                                                Classes="Primary" 
+                                                Height="40" Width="100">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <TextBlock Text="🔍" FontSize="16"/>
+                                                <TextBlock Text="Search" FontWeight="SemiBold"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </Grid>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="3">
+                                    <TextBlock Text="Phone Number" 
+                                               FontWeight="SemiBold" FontSize="13"
+                                               Foreground="#374151" Margin="0,0,0,6"/>
+                                    <TextBox Text="{Binding NewPatient.PhoneNumber}" 
+                                             Watermark="08x-xxx-xxxx" 
+                                             Classes="Large"/>
+                                </StackPanel>
+
+                                <!-- Row 1 Spacer -->
+                                <Border Grid.Row="1" Height="20"/>
+
+                                <!-- Row 2: Title, Name, Last Name, Sex -->
+                                <StackPanel Grid.Row="2" Grid.Column="0">
+                                    <TextBlock Text="Title" 
+                                               FontWeight="SemiBold" FontSize="13"
+                                               Foreground="#374151" Margin="0,0,0,6"/>
+                                    <ComboBox ItemsSource="{Binding TitleOptions}" 
+                                              SelectedItem="{Binding NewPatient.Title}" 
+                                              HorizontalAlignment="Stretch" 
+                                              Classes="Large"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="2">
+                                    <TextBlock Text="First Name" 
+                                               FontWeight="SemiBold" FontSize="13"
+                                               Foreground="#374151" Margin="0,0,0,6">
+                                        <TextBlock.Inlines>
+                                            <Run Text=" *" Foreground="#EF4444"/>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBox Text="{Binding NewPatient.FirstName}" 
+                                             Watermark="First Name" 
+                                             Classes="Large"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="4">
+                                    <TextBlock Text="Last Name" 
+                                               FontWeight="SemiBold" FontSize="13"
+                                               Foreground="#374151" Margin="0,0,0,6"/>
+                                    <TextBox Text="{Binding NewPatient.LastName}" 
+                                             Watermark="Last Name" 
+                                             Classes="Large"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="6">
+                                    <TextBlock Text="Sex" 
+                                               FontWeight="SemiBold" FontSize="13"
+                                               Foreground="#374151" Margin="0,0,0,6"/>
+                                    <ComboBox ItemsSource="{Binding SexOptions}" 
+                                              SelectedItem="{Binding NewPatient.Sex}" 
+                                              HorizontalAlignment="Stretch" 
+                                              Classes="Large"/>
+                                </StackPanel>
+                            </Grid>
+                            
+                            <!-- Date of Birth Row (Separated due to space) -->
+                            <Grid ColumnDefinitions="*, 20, *, 20, *, 20, *" RowDefinitions="Auto">
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Date of Birth" 
+                                               FontWeight="SemiBold" FontSize="13"
+                                               Foreground="#374151" Margin="0,0,0,6"/>
+                                    <DatePicker SelectedDate="{Binding BirthDateOffset}" 
+                                                HorizontalAlignment="Stretch" 
+                                                Height="40"
+                                                CornerRadius="8"/>
+                                </StackPanel>
+                            </Grid>
+                            
+                            <!-- Row 3 Spacer -->
+                            <Border Height="20"/>
+                            
+                            <!-- Address (Full Width) -->
+                            <StackPanel>
+                                <TextBlock Text="Address" 
+                                           FontWeight="SemiBold" FontSize="13"
+                                           Foreground="#374151" Margin="0,0,0,6"/>
+                                <TextBox Text="{Binding NewPatient.Address}" 
+                                         Watermark="House No, Street, District, Province..." 
+                                         Classes="Large"
+                                         AcceptsReturn="True"
+                                         TextWrapping="Wrap"
+                                         MinHeight="60"/>
+                            </StackPanel>
+
+                            <Separator Background="#E5E7EB" Height="1"/>
+
+                            <!-- Exam Information Section -->
+                            <StackPanel>
+                                <TextBlock Text="Examination Details" 
+                                           FontWeight="Bold" FontSize="16" 
+                                           Foreground="#1F2937" Margin="0,0,0,15"/>
+                                
+                                <Grid ColumnDefinitions="*, 20, *, 20, *" RowDefinitions="Auto">
+                                    
+                                    <!-- Exam Code (AutoComplete) -->
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Exam Code" 
+                                                   FontWeight="SemiBold" FontSize="13"
+                                                   Foreground="#374151" Margin="0,0,0,6">
+                                            <TextBlock.Inlines>
+                                                <Run Text=" (Type to search)" FontSize="11" Foreground="#9CA3AF" FontWeight="Normal"/>
+                                            </TextBlock.Inlines>
+                                        </TextBlock>
+                                        <AutoCompleteBox ItemsSource="{Binding ExamCodeList}"
+                                                         SelectedItem="{Binding SelectedExamCode}"
+                                                         Watermark="e.g. CXR"
+                                                         MinimumPrefixLength="1"
+                                                         FilterMode="Contains"
+                                                         Height="40"
+                                                         Padding="12,10"
+                                                         CornerRadius="8"
+                                                         Background="White"
+                                                         BorderBrush="#D1D5DB"
+                                                         BorderThickness="1"/>
+                                    </StackPanel>
+
+                                    <!-- Modality -->
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Modality" 
+                                                   FontWeight="SemiBold" FontSize="13"
+                                                   Foreground="#374151" Margin="0,0,0,6"/>
+                                        <TextBox Text="{Binding NewPatient.Modality}" 
+                                                 Classes="Large" IsReadOnly="True" 
+                                                 Foreground="#6B7280" Background="#F9FAFB"/>
+                                    </StackPanel>
+                                    
+                                    <!-- Description -->
+                                    <StackPanel Grid.Column="4">
+                                        <TextBlock Text="Study Description" 
+                                                   FontWeight="SemiBold" FontSize="13"
+                                                   Foreground="#374151" Margin="0,0,0,6"/>
+                                        <TextBox Text="{Binding NewPatient.StudyDescription}" 
+                                                 Classes="Large" IsReadOnly="True" 
+                                                 Foreground="#6B7280" Background="#F9FAFB"
+                                                 TextWrapping="NoWrap"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                            
                         </StackPanel>
-                    </Button>
+                    </Border>
 
-                    <TextBlock Text="{Binding StatusMessage}" 
-                               Foreground="{DynamicResource SystemAccentColor}"
-                               FontSize="16" FontWeight="SemiBold" 
-                               HorizontalAlignment="Center" Margin="0,15,0,0"/>
+                    <!-- Action Section -->
+                    <StackPanel Spacing="15">
+                        
+                        <!-- Save Button -->
+                        <Button Command="{Binding SavePatientCommand}" 
+                                IsEnabled="{Binding !IsBusy}"
+                                Classes="Success Large" 
+                                Height="55" 
+                                HorizontalAlignment="Stretch"
+                                ToolTip.Tip="Save patient information">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <TextBlock Text="💾" FontSize="20"/>
+                                <TextBlock Text="SAVE PATIENT" 
+                                           FontSize="16" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Status Message -->
+                        <Border Background="White" 
+                                CornerRadius="8" 
+                                Padding="15" 
+                                BorderThickness="1" 
+                                BorderBrush="#E5E7EB"
+                                IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                            <TextBlock Text="{Binding StatusMessage}" 
+                                       FontSize="14" 
+                                       Foreground="#374151" 
+                                       TextWrapping="Wrap"/>
+                        </Border>
+                        
+                    </StackPanel>
+
                 </StackPanel>
-
+                
             </Grid>
-        </StackPanel>
-    </ScrollViewer>
+        </ScrollViewer>
+    </Border>
 </UserControl>

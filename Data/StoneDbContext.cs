@@ -7,6 +7,9 @@ namespace StonePACS.Data
     {
         // ตาราง Patients ใน Database
         public DbSet<PatientModel> Patients { get; set; }
+        
+        // ตาราง ExamCodes (Master Data)
+        public DbSet<ExamCodeModel> ExamCodes { get; set; }
 
         // ตั้งค่าการเชื่อมต่อ (Connection String)
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
