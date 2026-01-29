@@ -1,0 +1,29 @@
+name: Build StonePACS Windows
+
+on:
+  push:
+    branches: [ "main" ] # ทำงานทุกครั้งที่มีการ Push เข้า main
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Publish for Windows (Single File)
+      # สร้างไฟล์ .exe ไฟล์เดียว รวมทุกอย่าง
+      run: dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./publish
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: StonePACS-Windows-App
+        path: ./publish

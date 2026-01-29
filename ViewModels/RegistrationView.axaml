@@ -1,0 +1,63 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:StonePACS.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="500"
+             x:Class="StonePACS.Views.RegistrationView"
+             x:DataType="vm:RegistrationViewModel">
+
+    <Grid RowDefinitions="*, Auto, *" ColumnDefinitions="*, Auto, *">
+        
+        <Border Grid.Row="1" Grid.Column="1"
+                Width="500"
+                Padding="24"
+                CornerRadius="8"
+                BoxShadow="0 4 12 0 #1A000000"
+                Background="White">
+
+            <StackPanel Spacing="16">
+                <TextBlock Text="Patient Registration" Theme="{DynamicResource TitleTextBlockStyle}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+                <StackPanel>
+                    <TextBlock Text="HN Number" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                    <TextBox Text="{Binding NewPatient.HN}" Watermark="Enter HN e.g. 6700123" Classes="Large"/>
+                </StackPanel>
+
+                <Grid ColumnDefinitions="*, 16, *">
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="First Name" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                        <TextBox Text="{Binding NewPatient.FirstName}" Watermark="First Name" Classes="Large"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Last Name" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                        <TextBox Text="{Binding NewPatient.LastName}" Watermark="Last Name" Classes="Large"/>
+                    </StackPanel>
+                </Grid>
+
+                 <Grid ColumnDefinitions="*, 16, *">
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Sex" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                        <ComboBox ItemsSource="{Binding SexOptions}" 
+                                  SelectedItem="{Binding NewPatient.Sex}"
+                                  HorizontalAlignment="Stretch"
+                                  Classes="Large"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                         <TextBlock Text="Date of Birth" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                         <DatePicker SelectedDate="{Binding NewPatient.DateOfBirth}"
+                                     HorizontalAlignment="Stretch"
+                                     Height="40"/> 
+                                     </StackPanel>
+                 </Grid>
+
+                <Button Command="{Binding SavePatientCommand}"
+                        Content="Register Patient"
+                        Classes="Primary Large"
+                        Margin="0,16,0,0"
+                        HorizontalAlignment="Stretch"/>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
